@@ -1,0 +1,143 @@
+## mako
+<%! from django.utils.translation import ugettext as _ %>
+    <%!
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+%>
+        <%namespace name='static' file='/static_content.html' />
+    <%inherit file="/main.html" />
+    <%block name="bodyclass">view-new_tab_type is-in-course course</%block>
+    <%block name="pagetitle">Videoconferencia</%block>
+    <%block name="headextra">
+        <%static:css group='style-course' />
+    </%block>
+    <%include file="/courseware/course_navigation.html" args="active_page='PAGE-SLUG'" />
+
+<div class="bbb-integration outline-none">
+    <main id="main" aria-label="Content" tabindex="-1" class="outline-none">
+        <section class="wrapper">
+            <link href="${configuration_helpers.get_value('GW_PORTAL_URL', '')}app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/support.css" rel="stylesheet">
+            <script src="${configuration_helpers.get_value('GW_PORTAL_URL', '')}app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/index.js"></script>
+            <div class="body" x-data="BBBIntegration()"
+                x-init="init('${ course.id }', '${ configuration_helpers.get_value('GW_GCORE_URL', '') }')" x-cloak="">
+                <div class="topBar"> <span>Videoconferencia</span>
+                    <div class="bg-blue-600 hover:bg-blue-800 newMeetingBtn" style="right:10px;top:10px"
+                        @click="createMeetingBox" x-show="isStaff"> Crear una videoconferencia </div>
+                </div>
+                <div class="meetingList">
+                    <div x-show="!meetings && !loading" class="meetingBox"> <span x-text="feedbackMessage">No hay
+                            videoconferencias</span> </div>
+                    <div x-show="meetings && !loading" class="max-h-96 overflow-y-scroll"> <template
+                            x-for="meeting in meetings ">
+                            <div class="bg-gray-100 hover:bg-gray-200 meetingBox">
+                                <div class="meetingTitle"> <span x-text="meeting.name"
+                                        class="font-semibold text-xl"></span>
+                                    <div class="flex justify-end"> <span x-text="'Disponible en: '" class="ml-2"></span>
+                                        <span x-text="meeting.meetingDate" class="font-bold ml-2"></span> <span
+                                            x-text="'Duración: '" class="ml-2"></span> <span x-text="meeting.duration"
+                                            class="font-bold ml-1"></span> <span x-text="' minutos'"
+                                            class="ml-1"></span> </div>
+                                </div>
+                                <div class="meetingBody">
+                                    <div class="bg-green-500 btn hover:bg-green-800" x-show="meeting.available"
+                                        @click="joinMeeting(meeting.meetingID, meeting.moderatorPW )"> Acceder </div>
+                                    <div class="bg-gray-400 btn hover:bg-gray-600" x-show="isStaff"
+                                        @click="confirmRemove(meeting.meetingID)"> Eliminar </div>
+                                </div>
+                            </div>
+                        </template> </div>
+                    <div x-show="loading" class="loader">Loading...</div>
+                </div>
+                <div class="recordsList" x-show="hasRecords && !loading">
+                    <div class="recordTitle">Grabaciones Guardadas</div> <template x-for="record in allRecords">
+                        <div class="border-gray-200 hover:bg-gray-100 mt-1 recordDetails">
+                            <div class="flex justify-between"> <span class="font-bold m-1" x-text="record.name"></span>
+                                <span class="m-1" x-text="'Creado en: ' + record.endTime"></span>
+                                <div class="flex justify-end">
+                                    <div class="bg-blue-500 btn hover:bg-blue-800" @click="playMeeting(record.url)">
+                                        Reproducir grabación </div>
+                                    <div class="bg-gray-400 btn hover:bg-gray-600" x-show="isStaff"
+                                        @click="confirmRemoveRecord(record.recordID)"> Eliminar </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="overlay" x-show="newMeetingBox && !loading" :class="{ 'overlay-open': newMeetingBox }">
+                    <div class="dialog md:max-w-md w-9/12" x-show="newMeetingBox" @click.away="newMeetingBox = false"
+                        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="ease-in duration-300"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
+                        <div class="title">
+                            <p>Crear una videoconferencia</p>
+                            <div class="cursor-pointer z-50" @click="newMeetingBox = false"> <svg
+                                    class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18">
+                                    <path
+                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                                </svg> </div>
+                        </div>
+                        <div class="content"> <input x-ref="meetingName" type="text"
+                                placeholder="Nombre de la videoconferencia (requerido)"> <span
+                                class="m-1 text-xs">Momento de inicio:</span> <input x-ref="meetingDate" type="date">
+                            <input x-ref="meetingTime" type="time" value="00:00"> <input x-ref="meetingDuration"
+                                type="number" placeholder="Duración en minutos (Ejemplo: 60)">
+                            <div> <input x-ref="meetingRecord" type="checkbox"> Grabar la videoconferencia </div>
+                            <div> <input x-ref="meetingSendWarnings" type="checkbox"> Enviar un aviso a los alumnos.
+                            </div>
+                        </div>
+                        <div class="footer"> <span x-text="createFormErrorMsg" class="errorMsg"></span>
+                            <div class="bg-blue-600 btn hover:bg-blue-800" @click="createMeeting"> Crear </div>
+                            <div class="bg-gray-400 btn hover:bg-gray-600" @click="newMeetingBox = false"> Cancelar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overlay" x-show="showModal && !loading" :class="{ 'overlay-open': showModal }">
+                    <div class="dialog md:max-w-md w-9/12" x-show="showModal" @click.away="showModal = false"
+                        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="ease-in duration-300"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
+                        <div class="title">
+                            <p>¿Estas seguro?</p>
+                            <div class="cursor-pointer z-50" @click="showModal = false"> <svg
+                                    class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18">
+                                    <path
+                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                                </svg> </div>
+                        </div>
+                        <div class="content"> </div>
+                        <div class="footer"> <span x-text="createFormErrorMsg" class="errorMsg"></span>
+                            <div class="bg-red-400 btn hover:bg-red-800" @click="removeMeeting(event)"> Eliminar </div>
+                            <div class="bg-gray-400 btn hover:bg-gray-600" @click="showModal = false"> Cancelar </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overlay" x-show="removeRecordModal && !loading"
+                    :class="{ 'overlay-open': removeRecordModal }">
+                    <div class="dialog md:max-w-md w-9/12" x-show="removeRecordModal"
+                        @click.away="removeRecordModal = false" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-90">
+                        <div class="title">
+                            <p>¿Estas seguro?</p>
+                            <div class="cursor-pointer z-50" @click="removeRecordModal = false"> <svg
+                                    class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18">
+                                    <path
+                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                                </svg> </div>
+                        </div>
+                        <div class="content"> </div>
+                        <div class="footer"> <span x-text="createFormErrorMsg" class="errorMsg"></span>
+                            <div class="bg-red-400 btn hover:bg-red-800" @click="removeRecord()"> Eliminar </div>
+                            <div class="bg-gray-400 btn hover:bg-gray-600" @click="removeRecordModal = false"> Cancelar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
