@@ -12,6 +12,6 @@ urlpatterns = (
             settings.COURSE_ID_PATTERN,
         ),
         BigBlueButtonAppView.as_view(),
-        name='rocketchat_view',
+        name='bigbluebuttonapp_view',
     ),
 )

@@ -1,3 +1,4 @@
+
 """
 Setup script for the Open edX package.
 """
@@ -5,15 +6,16 @@ Setup script for the Open edX package.
 from setuptools import setup
 
 setup(
-    name="bigbluebuttonapp_tab",
-    version="1.0",
-    install_requires=["setuptools"],
+    name="bigbluebuttonapp",
+    version="1.0.1",
+    install_requires=[],
     requires=[],
-    packages=["bigbluebuttonapp_tab"],
+    packages=["bigbluebuttonapp"],
+    package_data={'bigbluebuttonapp': ['templates/*','templates/*/*']},
     include_package_data=True,
     entry_points={
-        "openedx.course_tab": [
-            "bigbluebuttonapp_tab = bigbluebuttonapp_tab.plugins:BBBTab"
-        ]
-    }
+        'openedx.course_tab': [
+            'bigbluebuttonapp = bigbluebuttonapp.plugins:BBBTab',
+        ],
+    },
 )
