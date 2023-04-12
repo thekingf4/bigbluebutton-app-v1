@@ -8,7 +8,7 @@ from lms.djangoapps.courseware.tabs import EnrolledTab
 from xmodule.tabs import TabFragmentViewMixin
 
 class RocketChatTab(TabFragmentViewMixin, EnrolledTab):
-    type = 'bigbluebuttonapp_tab'
+    type = 'bigbluebuttonapp'
     title = ugettext_noop('BBB')
     priority = None
     view_name = 'bigbluebuttonapp_view'
