@@ -9,9 +9,11 @@ from xmodule.tabs import TabFragmentViewMixin
 
 class BBBTab(TabFragmentViewMixin, EnrolledTab):
     type = 'bigbluebuttonapp'
-    title = ugettext_noop('BBB')
+    title = ugettext_noop('Mensajeria')
+    is_default = True
     priority = None
     view_name = 'bigbluebuttonapp_view'
+    tab_id = "bigbluebuttonapp"
     is_hideable = True
     # is_default = True
     # body_class = 'rocketchat'

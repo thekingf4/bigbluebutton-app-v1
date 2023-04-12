@@ -32,22 +32,22 @@ class BigBlueButtonAppView(EdxFragmentView):
             settings.STATICFILES_DIRS.append(tabStaticPath)
         course_key = CourseKey.from_string(course_id)
         course = get_course_with_access(request.user, "load", course_key)
-        try:
-            context = {
-                "course": course,
-                "settings": settings,
-                "dirs":  configuration_helpers.get_value('GW_PORTAL_URL', 'PORTAL_URL'),
-                "dirs2":  configuration_helpers.get_value('GW_GCORE_URL', 'G-CORE_URL') ,
-            }
-            html = render_to_string('bigbluebuttonapp/tab.html', context)
+        context = {
+            "course": course,
+            "settings": settings,
+            "dirs":  configuration_helpers.get_value('GW_PORTAL_URL', 'PORTAL_URL'),
+            "dirs2":  configuration_helpers.get_value('GW_GCORE_URL', 'G-CORE_URL') ,
+        }
+        html = render_to_string('bigbluebuttonapp/tab.html', context)
+        fragment = Fragment(html)
+        return fragment
+        # try:
             # inline_js = render_to_string('discussion/discussion_board_js.template', context)
 
-            fragment = Fragment(html)
             # self.add_fragment_resource_urls(fragment)
             # fragment.add_javascript(inline_js)
             # if not settings.REQUIRE_DEBUG:
             #     fragment.add_javascript_url(staticfiles_storage.url('discussion/js/discussion_board_factory.js'))
-            return fragment
         # except cc.utils.CommentClientMaintenanceError:
         #     log.warning('Forum is in maintenance mode')
         #     html = render_to_response('discussion/maintenance_fragment.html', {
