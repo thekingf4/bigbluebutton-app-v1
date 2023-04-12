@@ -6,7 +6,7 @@ Setup script for the Open edX package.
 from setuptools import setup
 
 setup(
-    name="bigbluebuttonapp_tab",
+    name="bigbluebuttonapp",
     version="1.0.1",
     install_requires=[],
     requires=[],
