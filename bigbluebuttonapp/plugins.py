@@ -12,7 +12,7 @@ class BBBTab(TabFragmentViewMixin, EnrolledTab):
     title = ugettext_noop('Mensajeria')
     is_default = True
     priority = None
-    view_name = 'bigbluebuttonapp_view'
+    view_name = 'BigBlueButtonAppView'
     tab_id = "bigbluebuttonapp"
     is_hideable = True
     # is_default = True
