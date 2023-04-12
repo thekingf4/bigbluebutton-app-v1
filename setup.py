@@ -7,7 +7,7 @@ from setuptools import setup
 
 setup(
     name="bigbluebuttonapp",
-    version="1.0.2",
+    version="1.0.3",
     install_requires=[],
     requires=[],
     packages=["bigbluebuttonapp"],
