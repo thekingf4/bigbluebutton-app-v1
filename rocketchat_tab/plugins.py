@@ -7,13 +7,11 @@ from django.utils.translation import ugettext_noop
 from lms.djangoapps.courseware.tabs import EnrolledTab
 from xmodule.tabs import TabFragmentViewMixin
 
-class BBBTab(TabFragmentViewMixin, EnrolledTab):
-    type = 'bigbluebuttonapp'
-    title = ugettext_noop('Mensajeria')
-    is_default = True
+class RocketChatTab(TabFragmentViewMixin, EnrolledTab):
+    type = 'rocketchat_tab'
+    title = ugettext_noop('Chat')
     priority = None
-    view_name = 'BigBlueButtonAppView'
-    tab_id = "bigbluebuttonapp"
+    view_name = 'rocketchat_view'
     is_hideable = True
     # is_default = True
     # body_class = 'rocketchat'
