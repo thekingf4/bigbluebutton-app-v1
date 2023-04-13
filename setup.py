@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name="rocketchat-tab",
-    version="0.1.0",
+    version="0.1.1",
     author="Tony Hetrick",
     license="MIT",
     author_email="tony.hetrick@gmail.com",
