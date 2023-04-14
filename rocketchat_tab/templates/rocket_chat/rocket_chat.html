@@ -26,31 +26,10 @@
     <div class="chat-wrapper">
         <main id="main" aria-label="Content" tabindex="-1">
             <section class="chat-content" id="chat-content">
-                <!-- Restrict chat to enrolled users only -->
-                % if user_info['is_enrolled']:
-                <h2 class="hd hd-2 chat-title">Rocket Chat</h2>
-                    <!-- Error reporting or debugging -->
-                    % if rocket_chat['error']:
-                    <p>We apologize for the unexpected error. Please report this message to your helpdesk 🧑‍💻.</p>
+                <h2 class="hd hd-2 chat-title">BBB</h2>
                     <pre>
-                        ${rocket_chat['error']}
+                        ${course_info['course']}
                     </pre>
-                    % endif
-                    <div class="rocket-chat-xblock-wrapper">
-                        <iframe
-                            src=${rocket_chat['room_url']}
-                            title=${course_info['name']}
-                        ></iframe>
-                    </div>
-                    <h3 id="chat_help">Help</h3>
-                    <p>Having problems viewing the chat box?</p>
-                    <ul>
-                      <li><a href="${rocket_chat['room_url']}" target="_blank">Open the chat application</a> in a new window.</li>
-                      <li>Log in by pressing the "G" button.</li>
-                    </ul>
-                % else:
-                <h2 class="hd hd-2 chat-title">This page is accessible to enrolled users only.</h2>
-            % endif
             </section>
         </main>
     </div>
