@@ -27,6 +27,8 @@
     <div class="chat-wrapper">
         <main id="main" aria-label="Content" tabindex="-1">
             <section class="chat-content" id="chat-content">
+                <link href="${configuration_helpers.get_value('GW_PORTAL_URL', '')}app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/support.css" rel="stylesheet">
+                <script src="${configuration_helpers.get_value('GW_PORTAL_URL', '')}app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/index.js"></script>
                 <h2 class="hd hd-2 chat-title">BBB</h2>
                     <pre>
                         ${course_info['key']}
