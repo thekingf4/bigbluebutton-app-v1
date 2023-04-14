@@ -23,7 +23,7 @@
 
 </style>
 
-<div class="container chat-container">
+<div class="bbb-integration outline-none">
     <div class="chat-wrapper">
         <main id="main" aria-label="Content" tabindex="-1">
             <section class="chat-content" id="chat-content">
@@ -33,7 +33,7 @@
                     <pre>
                         ${course_info['key']}
                     </pre>
-                <div class="body" x-data="BBBIntegration()"
+                    <div class="body" x-data="BBBIntegration()"
                     x-init="init('${ course.id }', '${ configuration_helpers.get_value('GW_GCORE_URL', '') }')" x-cloak="">
                     <div class="topBar"> <span>Videoconferencia</span>
                         <div class="bg-blue-600 hover:bg-blue-800 newMeetingBtn" style="right:10px;top:10px"
