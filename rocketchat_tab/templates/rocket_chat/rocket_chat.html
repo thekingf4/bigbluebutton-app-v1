@@ -1,4 +1,5 @@
 ## mako
+<%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
 <%! from django.utils.translation import ugettext as _ %>
 <%namespace name='static' file='/static_content.html'/>
 <%block name="bodyclass">view-in-course</%block>
@@ -28,7 +29,7 @@
             <section class="chat-content" id="chat-content">
                 <h2 class="hd hd-2 chat-title">BBB</h2>
                     <pre>
-                        ${course_info['course']}
+                        ${course_info['key']}
                     </pre>
             </section>
         </main>
