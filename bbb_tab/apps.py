@@ -5,8 +5,8 @@ from django.apps import AppConfig
 from openedx.core.djangoapps.plugins.constants import PluginSettings, PluginURLs, ProjectType, SettingsType
 
 
-class RocketChatConfig(AppConfig):
-    name = 'rocketchat_tab'
+class BBBConfig(AppConfig):
+    name = 'bbb_tab'
 
     plugin_app = {
         PluginURLs.CONFIG: {

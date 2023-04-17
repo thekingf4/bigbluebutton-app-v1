@@ -4,14 +4,11 @@
 import setuptools
 
 setuptools.setup(
-    name="rocketchat-tab",
-    version="0.1.2",
-    author="Tony Hetrick",
+    name="bbb-tab",
+    version="0.1.",
     license="MIT",
-    author_email="tony.hetrick@gmail.com",
-    description="rocketchat-tab Open edX course_tab",
-    long_description="Integrates Rocket.Chat into each course by adding a new tab.",
-    url="https://github.com/tony-h/rocketchat-tab",
+    description="bbb-tab Open edX course_tab",
+    # url="https://github.com/tony-h/rocketchat-tab",
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[
@@ -24,10 +21,10 @@ setuptools.setup(
     ],
     entry_points={
         "lms.djangoapp": [
-            "rocketchat_tab = rocketchat_tab.apps:RocketChatConfig",
+            "bbb_tab = bbb_tab.apps:BBBConfig",
         ],
         "openedx.course_tab": [
-            "rocketchat_tab = rocketchat_tab.plugins:RocketChatTab",
+            "bbb_tab = bbb_tab.plugins:BBBTab",
         ]
     },
 )

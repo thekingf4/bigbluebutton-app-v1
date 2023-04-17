@@ -3,7 +3,7 @@
 
 from django.conf.urls import url
 from django.conf import settings
-from .views import RocketChatView
+from .views import BBBView
 
 
 urlpatterns = (
@@ -11,7 +11,7 @@ urlpatterns = (
         r'courses/{}/chat$'.format(
             settings.COURSE_ID_PATTERN,
         ),
-        RocketChatView.as_view(),
-        name='rocketchat_view',
+        BBBView.as_view(),
+        name='bbb_view',
     ),
 )
