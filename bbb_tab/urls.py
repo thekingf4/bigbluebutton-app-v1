@@ -8,7 +8,7 @@ from .views import BBBView
 
 urlpatterns = (
     url(
-        r'courses/{}/chat$'.format(
+        r'courses/{}/bbb$'.format(
             settings.COURSE_ID_PATTERN,
         ),
         BBBView.as_view(),
