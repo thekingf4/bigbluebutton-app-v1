@@ -17,9 +17,6 @@
             <link href="${configuration_helpers.get_value('GW_PORTAL_URL', '')}/app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/support.css" rel="stylesheet">
             <script src="${configuration_helpers.get_value('GW_PORTAL_URL', '')}/app/bigbluebutton/bigbluebuttonapp/templates/bigbluebuttonapp/dist/index.js"></script>
             <h2 class="hd hd-2 chat-title">BBB</h2>
-                <pre>
-                    ${course_info['key']}
-                </pre>
                 <div class="body" x-data="BBBIntegration()"
                 x-init="init('${ course.id }', '${ configuration_helpers.get_value('GW_GCORE_URL', '') }')" x-cloak="">
                 <div class="topBar"> <span>Videoconferencia</span>
