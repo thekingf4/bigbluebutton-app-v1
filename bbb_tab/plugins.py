@@ -9,7 +9,7 @@ from xmodule.tabs import TabFragmentViewMixin
 
 class BBBTab(TabFragmentViewMixin, EnrolledTab):
     type = 'bbb_tab'
-    title = ugettext_noop('BBB')
+    title = ugettext_noop('Videoconferencias')
     priority = None
     view_name = 'bbb_view'
     is_hideable = True
