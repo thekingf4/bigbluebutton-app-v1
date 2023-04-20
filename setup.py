@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name="bbb-tab",
-    version="0.1.",
+    version="0.2",
     license="MIT",
     description="bbb-tab Open edX course_tab",
     # url="https://github.com/tony-h/rocketchat-tab",
